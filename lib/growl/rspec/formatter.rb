@@ -70,9 +70,14 @@ module Growl
 
         msg = "#{example_count} specs in total (#{pending_count} pending). "\
               "Consumed #{duration.round(1)}s"
-        ::Growl.notify_info msg, {
-          :title => "#{failure_count} specs failed!"
-        }.merge(self.class.growlnotify_config)
+
+        title = if failure_count == 0
+          "All specs passed."
+        else
+          "#{failure_count} specs failed!"
+        end
+
+        ::Growl.notify_info msg, { :title => title }.merge(self.class.growlnotify_config)
       end
     end
   end
