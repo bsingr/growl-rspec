@@ -49,7 +49,6 @@ module Growl
 
       # hook when spec failed
       def dump_failures
-        super
         return if failed_examples.empty?
         if self.class.config[:growl_failures]
 
@@ -66,8 +65,6 @@ module Growl
 
       # hook when all specs ran
       def dump_summary(duration, example_count, failure_count, pending_count)
-        super(duration, example_count, failure_count, pending_count)
-
         msg = "#{example_count} specs in total (#{pending_count} pending). "\
               "Consumed #{duration.round(1)}s"
 
