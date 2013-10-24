@@ -19,3 +19,7 @@ Further information have a look at lib/growl/rspec/formatter.rb
 ## License
 
 see MIT-LICENSE
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dpree/growl-rspec/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
