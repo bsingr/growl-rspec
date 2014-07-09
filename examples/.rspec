@@ -1,0 +1,4 @@
+--color
+--warnings
+--format Growl::RSpec::Formatter
+--require spec_helper
