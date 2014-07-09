@@ -4,7 +4,13 @@ Provides a RSpec Formatter using the growl gem (and growlnotify)
 
 ## Install
 
+**RSpec 3**
+
     gem install growl-rspec
+
+**RSpec 2**
+
+    gem install growl-rspec -v 0.0.2
 
 ## Configuration
 
