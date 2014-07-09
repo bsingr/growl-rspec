@@ -1,4 +1,4 @@
-require 'rspec/core/formatters/base_text_formatter'
+require 'rspec/core/formatters'
 
 module Growl
   module RSpec
@@ -20,7 +20,8 @@ module Growl
     #      :host => 'your.growl.host'
     #    }
     #
-    class Formatter < ::RSpec::Core::Formatters::BaseTextFormatter
+    class Formatter
+      ::RSpec::Core::Formatters.register self, :dump_failures, :dump_summary
 
       # the formatters default config hash
       DEFAULT_CONFIG = {
@@ -47,31 +48,35 @@ module Growl
         @@_growlnotify_config ||= {}
       end
 
+      def initialize output
+        @output = output
+      end
+
       # hook when spec failed
-      def dump_failures
-        return if failed_examples.empty?
+      def dump_failures(examples_notification)
+        return if examples_notification.failed_examples.empty?
         if self.class.config[:growl_failures]
 
-          msg = failed_examples.each_with_index.map do |example, idx|
+          msg = examples_notification.failed_examples.each_with_index.map do |example, idx|
             ["#{idx+1}. it #{example.description}",
              example.metadata[:execution_result][:exception]]
           end.flatten.join("\n\n")
 
           ::Growl.notify_warning msg, {
-            :title => "#{failed_examples.size} specs failed"
+            :title => "#{examples_notification.failed_examples.size} specs failed"
           }.merge(self.class.growlnotify_config)
         end
       end
 
       # hook when all specs ran
-      def dump_summary(duration, example_count, failure_count, pending_count)
-        msg = "#{example_count} specs in total (#{pending_count} pending). "\
-              "Consumed #{duration.round(1)}s"
+      def dump_summary(summary)
+        msg = "#{summary.example_count} specs in total (#{summary.pending_count} pending). "\
+              "Consumed #{summary.duration.round(1)}s"
 
-        title = if failure_count == 0
+        title = if summary.failure_count == 0
           "All specs passed."
         else
-          "#{failure_count} specs failed!"
+          "#{summary.failure_count} specs failed!"
         end
 
         ::Growl.notify_info msg, { :title => title }.merge(self.class.growlnotify_config)
