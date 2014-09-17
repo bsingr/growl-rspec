@@ -5,9 +5,9 @@ require "growl/rspec/version"
 Gem::Specification.new do |s|
   s.name        = "growl-rspec"
   s.version     = Growl::RSpec::VERSION
-  s.authors     = ["dpree"]
-  s.email       = ["whiterabbit.init@gmail.com"]
-  s.homepage    = "https://github.com/dpree/growl-rspec"
+  s.authors     = ["bsingr"]
+  s.email       = ["mail@jens-bissinger.de"]
+  s.homepage    = "https://github.com/bsingr/growl-rspec"
   s.summary     = %q{Publishing RSpec results via Growl}
   s.description = %q{Provides a new RSpec formatter that uses growlnotify}
 
