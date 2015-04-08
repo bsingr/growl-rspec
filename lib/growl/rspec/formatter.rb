@@ -59,7 +59,7 @@ module Growl
 
           msg = examples_notification.failed_examples.each_with_index.map do |example, idx|
             ["#{idx+1}. it #{example.description}",
-             example.metadata[:execution_result][:exception]]
+             example.metadata[:execution_result].exception]
           end.flatten.join("\n\n")
 
           ::Growl.notify_warning msg, {
